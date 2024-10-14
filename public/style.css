@@ -1,0 +1,244 @@
+/* General Styles */
+body {
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #212529;
+    color: white;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #343a40;
+    border-left: 5px solid #007bff;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+/* Navbar Styling */
+.navbar {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    background-color: #007bff;
+    color: white;
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-brand:hover {
+    color: #dfe6e9;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+    font-weight: 500;
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #dfe6e9;
+}
+
+/* Main Content Styling */
+.main-content {
+    margin-left: 250px;
+    padding-top: 80px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: calc(100% - 250px);
+}
+
+/* Card Styling */
+.card {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card .card-body {
+    padding: 20px;
+}
+
+.card h5 {
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Table Styling */
+table th,
+table td {
+    vertical-align: middle;
+}
+
+table .badge {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+/* Custom Form Styles */
+.custom-card {
+    background-color: #fff; /* সাদা ব্যাকগ্রাউন্ড */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: auto;
+}
+
+/* .custom-card-header {
+    background: linear-gradient(90deg, #007bff, #6610f2);
+} */
+
+.custom-btn-light {
+    background-color: #0b8835;
+    color: #f8f8f8;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.custom-btn-light:hover {
+    background-color: #e2e6ea;
+}
+
+.custom-btn-gradient {
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.custom-btn-gradient:hover {
+    background: linear-gradient(90deg, #ff4b2b, #ff416c);
+}
+
+.custom-input, .custom-select, .custom-textarea {
+    border-radius: 5px;
+    border: 2px solid #ced4da;
+    transition: border-color 0.3s;
+}
+
+.custom-input:focus, .custom-select:focus, .custom-textarea:focus {
+    border-color: #ff416c;
+    box-shadow: none;
+}
+
+.custom-textarea {
+    resize: none;
+}
+
+#customImagePreview {
+    max-width: 100%;
+    max-height: 200px;
+    border: 2px dashed #ff416c;
+    margin-top: 10px;
+}
+
+#imagePreviewContainer {
+    display: none; /* Initially hidden */
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .navbar {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        display: none;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+}
+
+
+
+
+/* custom errors alerts */
+
+.custom-alert {
+    background-color: #f8d7da; /* লাল ব্যাকগ্রাউন্ড */
+    color: #721c24; /* লাল টেক্সট */
+    border: 1px solid #f5c6cb; /* হালকা লাল বর্ডার */
+    border-radius: 5px; /* গোলাকার বর্ডার */
+    padding: 15px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.custom-alert ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.custom-alert li {
+    padding: 5px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .custom-alert {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
