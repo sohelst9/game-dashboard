@@ -14,11 +14,11 @@ class GameController extends Controller
     {
         $limit = $request->input('limit');
         if ($limit) {
-            $games = Game::limit($limit)->get();
+            $games = Game::latest()->limit($limit)->get();
             return GameResource::collection($games);
         }
 
-        $games = Game::paginate(33);
+        $games = Game::latest()->paginate(33);
         return GameResource::collection($games);
     }
 
