@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('game_link');
             $table->string('category')->nullable();
+            $table->string('tags')->nullable();
             $table->string('image_link')->nullable();
             $table->string('image')->nullable();
             $table->longText('description')->nullable();

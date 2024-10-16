@@ -108,6 +108,92 @@ class MultiGameController extends Controller
                 }
             }
         }
+        if ($request->gametype == 'distribution') {
+            $api_url = $request->gamelink;
+            $post_data = Http::get($api_url);
+            $datas = json_decode($post_data->body());
+
+            foreach ($datas as $data) {
+                $data = (array)$data;
+                $same_game = Game::where('name', $data['Title'])->first();
+                if ($same_game) {
+                    continue;
+                }
+
+
+                // URL to downlaod image
+                $imageUrl = $data['Asset'][1] ?? $data['Asset'][0] ?? null;
+                // SSL off
+                $context = stream_context_create([
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                    ],
+                ]);
+
+                // image download
+                $imageContent = file_get_contents($imageUrl, false, $context);
+
+                if ($imageContent === false) {
+                    return response()->json(['message' => 'Could not download the image.'], 400);
+                }
+
+                // create image file
+                $imageResource = imagecreatefromstring($imageContent);
+
+                if ($imageResource === false) {
+                    return response()->json(['message' => 'Invalid image.'], 400);
+                }
+                // get image current size
+                $width = imagesx($imageResource);
+                $height = imagesy($imageResource);
+
+                // new image size add
+                $newWidth = 320;
+                $newHeight = 197;
+
+                //  create new image canvas
+                $resizedImageResource = imagecreatetruecolor($newWidth, $newHeight);
+
+                // resize image
+                imagecopyresampled($resizedImageResource, $imageResource, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+                // make WebP file 
+                $imageName = Str::slug($data['Title'], '-') . '-' . uniqid() . '.webp';
+                $imagePath = public_path('images/games/' . $imageName);
+
+                $imagePathDatabaseSave = 'images/games/' . $imageName; 
+
+                // image save webp
+                imagewebp($resizedImageResource, $imagePath, 90); // 90 মানে হচ্ছে কোয়ালিটি
+
+                // memory to image resource free 
+                imagedestroy($imageResource);
+                imagedestroy($resizedImageResource);
+                // return response()->json(['message' => 'Image saved successfully!', 'image_path' => $imagePath]);
+
+                $categories = implode(',', $data['Category'] ?? ['HTML5']);
+                $tags = implode(',', $data['Tag'] ?? ['HTML5']);
+
+                $game_id = Game::insertGetId([
+                    'name' => $data['Title'],
+                    'slug' => Str::slug($data['Title'], '-'),
+                    'game_link' => $data['Url'],
+                    'type' => $request->game_type,
+                    'description' => $data['Description'],
+                    'image' => $imagePathDatabaseSave,
+                    'image_link' => $imageUrl,
+                    'category' => $categories,
+                    'tags' => $tags,
+                    'status' => 1,
+                    'created_at' => now()
+                ]);
+
+                if ($game_id) {
+                    $count_game++;
+                }
+            }
+        }
 
         return redirect()->route('games')->with('success', $count_game . ' Games Inserted Successfully !');
     }

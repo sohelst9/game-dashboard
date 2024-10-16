@@ -34,7 +34,12 @@
                                 <td>
                                     <img src="{{ asset($game->image) }}" alt="" width="100">
                                 </td>
-                                <td>{{ $game->category }}</td>
+                                <td>
+                                    @foreach (explode(',', $game->category) as $category)
+                                        <a class="btn btn-sm btn-primary">{{ trim($category) }}</a>
+                                    @endforeach
+                                </td>
+
                                 <td>
                                     @if ($game->status == 1)
                                         <span class="badge bg-success">Active</span>
