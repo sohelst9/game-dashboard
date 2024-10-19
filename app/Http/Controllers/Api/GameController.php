@@ -18,7 +18,7 @@ class GameController extends Controller
             return GameResource::collection($games);
         }
 
-        $games = Game::latest()->paginate(33);
+        $games = Game::latest()->paginate(24);
         return GameResource::collection($games);
     }
 
