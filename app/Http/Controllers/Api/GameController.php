@@ -13,12 +13,22 @@ class GameController extends Controller
     public function games(Request $request)
     {
         $limit = $request->input('limit');
+        $search = $request->input('search'); // Get search input from the request
+
+        // Query builder for fetching games
+        $query = Game::latest();
+
+        // If a search term is provided, apply the search filter
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%"); // Assuming 'name' is the column you want to search
+        }
+
         if ($limit) {
-            $games = Game::latest()->limit($limit)->get();
+            $games = $query->limit($limit)->get();
             return GameResource::collection($games);
         }
 
-        $games = Game::latest()->paginate(24);
+        $games = $query->paginate(24); // Paginate the results
         return GameResource::collection($games);
     }
 
