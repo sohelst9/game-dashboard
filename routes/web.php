@@ -3,11 +3,10 @@
 use App\Http\Controllers\Dashbaord\DashboardController;
 use App\Http\Controllers\Dashbaord\GameController;
 use App\Http\Controllers\Dashbaord\MultiGameController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[HomeController::class, 'index']);
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
